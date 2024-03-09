@@ -130,7 +130,7 @@ class HashMap {
 
     let count = 0;
 
-    for (let i = 0; i <= this.MaxLength; i++) {
+    for (let i = 0; i < this.MaxLength; i++) {
       if (this.buckets[i] !== undefined) {
         count++;
         let currentLinkedList = this.buckets[i].head;
@@ -149,15 +149,92 @@ class HashMap {
   }
   clear() {
     //removes all entries in the hash map.
+    // clear all the buckets?
+
+    this.buckets = {};
+    return this.buckets;
   }
   keys() {
-    //returns an array containing all the keys inside the hash map.
+    //loopping
+
+    const arr = [];
+    for (let i = 0; i <= this.MaxLength; i++) {
+      if (
+        this.buckets[i] !== undefined &&
+        this.buckets[i].head.value !== null &&
+        this.buckets[i].head.key !== null
+      ) {
+        let currentLinkedList = this.buckets[i].head;
+        arr.push(currentLinkedList.key);
+        while (
+          currentLinkedList.value !== null &&
+          currentLinkedList.key !== null &&
+          currentLinkedList.next !== null
+        ) {
+          currentLinkedList = currentLinkedList.next;
+          arr.push(currentLinkedList.key);
+        }
+      }
+    }
+    console.log(arr);
+
+    return arr;
   }
   values() {
-    //returns an array containing all the values.
+    const arr = [];
+    for (let i = 0; i < this.MaxLength; i++) {
+      if (
+        this.buckets[i] !== undefined &&
+        this.buckets[i].head.value !== null &&
+        this.buckets[i].head.key !== null
+      ) {
+        let currentLinkedList = this.buckets[i].head;
+        arr.push(currentLinkedList.value);
+        while (
+          currentLinkedList.value !== null &&
+          currentLinkedList.key !== null &&
+          currentLinkedList.next !== null
+        ) {
+          currentLinkedList = currentLinkedList.next;
+          arr.push(currentLinkedList.value);
+        }
+      }
+    }
+    console.log(arr);
+
+    return arr;
   }
   entries() {
     //returns an array that contains each key, value pair. Example: [[firstKey, firstValue], [secondKey, secondValue]]
+    const arr = [];
+
+    for (let i = 0; i < this.MaxLength; i++) {
+      if (
+        this.buckets[i] !== undefined &&
+        this.buckets[i].head.value !== null &&
+        this.buckets[i].head.key !== null
+      ) {
+        let currentLinkedList = this.buckets[i].head;
+        const subArr = [];
+        subArr.push(currentLinkedList.key);
+        subArr.push();
+        arr.push([currentLinkedList.key, currentLinkedList.value]);
+        while (
+          currentLinkedList.value !== null &&
+          currentLinkedList.key !== null &&
+          currentLinkedList.next !== null
+        ) {
+          currentLinkedList = currentLinkedList.next;
+          const subArr = [];
+          subArr.push(currentLinkedList.key);
+          subArr.push(currentLinkedList.value);
+          arr.push(subArr);
+        }
+      }
+    }
+    console.log(arr);
+
+    return arr;
   }
 }
 
@@ -203,9 +280,37 @@ hashMap.set('key38', 38);
 hashMap.set('key39', 39);
 hashMap.set('key40', 40);
 hashMap.set('key40', 45);
-console.log(hashMap.MaxLength);
+hashMap.set('key41', 41);
+hashMap.set('key42', 42);
+hashMap.set('key43', 43);
+hashMap.set('key44', 44);
+hashMap.set('key45', 45);
+hashMap.set('key46', 46);
+hashMap.set('key47', 47);
+hashMap.set('key48', 48);
+hashMap.set('key49', 49);
+hashMap.set('key50', 50);
+hashMap.set('key51', 51);
+hashMap.set('key52', 52);
+hashMap.set('key53', 53);
+hashMap.set('key54', 54);
+hashMap.set('key55', 55);
+hashMap.set('key56', 56);
+hashMap.set('key57', 57);
+hashMap.set('key58', 58);
+hashMap.set('key59', 59);
+hashMap.set('key60', 60);
+hashMap.set('key61', 61);
+hashMap.set('key62', 62);
+hashMap.set('key63', 63);
+hashMap.set('key64', 64);
+hashMap.set('key65', 65);
+hashMap.set('key66', 66);
+hashMap.set('key67', 67);
+hashMap.set('key68', 68);
+hashMap.set('key69', 69);
+hashMap.entries();
 
-console.log(hashMap.getLength());
 console.log(hashMap);
 
 //Extra credits: Create a class HashSet that behaves the same as a HashMap but only contains keys with no values.
