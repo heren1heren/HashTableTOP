@@ -12,18 +12,36 @@ import LinkedList from './LinkedList';
 
 class HashMap {
   buckets: Array;
-  length: number;
+  MaxLength: number;
   loadFactor: number;
   constructor() {
     this.buckets = [];
-    this.loadFactor = 0.75;
-    this.length = 31;
+    this.loadFactor = 0.7;
+    this.MaxLength = 31;
   }
-
+  isPrime(number: number) {
+    const size = (size = Math.sqrt(number));
+    for (let i = 2; i <= size; i++) {
+      //
+      if (number % i === 0) return false;
+    }
+    return true;
+  }
+  getNextPrime(num: number) {
+    let prime = num;
+    let found = false;
+    while (!found) {
+      prime++;
+      if (this.isPrime(prime)) {
+        found = true;
+      }
+    }
+    return prime;
+  }
   hash(key: string): number {
     let hashCode = 0;
 
-    const primeNumber = this.length;
+    const primeNumber = this.MaxLength;
     for (let i = 0; i < key.length; i++) {
       hashCode = (hashCode + key.charCodeAt(i)) % primeNumber;
     }
@@ -31,19 +49,14 @@ class HashMap {
     return hashCode;
   }
   set(key: string, value: number) {
-    /* 
-
-set(key, value) takes two arguments. the first is a key and the second is a value that is assigned to this key. If a key already exists, then the old value is overwritten or we can say that we update the key’s value (e.g. Carlos is our key but it is called twice: once with value I am the old value., and once with value I am the new value.. From the logic stated above, Carlos should contain only the latter value).
-
-In the meantime, a collision is when TWO DIFFERENT keys sit inside the same bucket, because they generate the same hash code (e.g. Carlos and Carla are both hashed to 3, so 3 becomes a location for Carlos AND Carla. However, we know that it is the collision. It means we should find a way how to resolve it — how to deal with collisions, which was mentioned in the previous lesson).
-
-    Remember to grow your buckets size when it needs to, by calculating if your bucket has reached the load factor. Some of the methods in this assignment that are mentioned later could be reused to help you handle that growth logic more easily. So you may want to hold onto implementing your growing functionality just for now. However, the reason why we mention it with set() is because it’s important to grow buckets exactly when they are being expanded.
-
-
+    /* check to increase array length
      */
 
+    if (this.getLength() >= this.MaxLength * this.loadFactor) {
+      this.MaxLength = this.getNextPrime(this.MaxLength);
+    }
     const hashCode = this.hash(key);
-    if (hashCode < 0 || hashCode >= this.length) {
+    if (hashCode < 0 || hashCode >= this.MaxLength) {
       console.log(hashCode);
       return;
     }
@@ -92,7 +105,7 @@ In the meantime, a collision is when TWO DIFFERENT keys sit inside the same buck
     const hashCode = this.hash(key);
     if (
       hashCode < 0 ||
-      hashCode >= this.length ||
+      hashCode >= this.MaxLength ||
       this.buckets[hashCode] === undefined
     ) {
       console.log("i can't not find it, baby");
@@ -110,15 +123,29 @@ In the meantime, a collision is when TWO DIFFERENT keys sit inside the same buck
     return;
   }
   getLength() {
+    //! I am here
     //returns the number of stored keys in the hash map.
-    // using for..loop to increase the count 
+    // using for..loop to increase the count
     // it is tricky because we need to access every bucket to count for keys too.
 
     let count = 0;
 
-    for(let i = 0; i <= this.length; i++) {
-        if(this.buckets[i])
+    for (let i = 0; i <= this.MaxLength; i++) {
+      if (this.buckets[i] !== undefined) {
+        count++;
+        let currentLinkedList = this.buckets[i].head;
+        while (
+          currentLinkedList.value !== null &&
+          currentLinkedList.key !== null &&
+          currentLinkedList.next !== null
+        ) {
+          count++;
+          currentLinkedList = currentLinkedList.next;
+        }
+      }
     }
+
+    return count;
   }
   clear() {
     //removes all entries in the hash map.
@@ -135,13 +162,51 @@ In the meantime, a collision is when TWO DIFFERENT keys sit inside the same buck
 }
 
 const hashMap = new HashMap();
-hashMap.set('hwx', 22);
-hashMap.set('Idonthinkyouhaveme', 111);
-hashMap.remove('hwx');
-hashMap.set('hwx', 22);
+hashMap.set('key1', 1);
+hashMap.set('key2', 2);
+hashMap.set('key3', 3);
+hashMap.set('key4', 4);
+hashMap.set('key5', 5);
+hashMap.set('key6', 6);
+hashMap.set('key7', 7);
+hashMap.set('key8', 8);
+hashMap.set('key9', 9);
+hashMap.set('key10', 10);
+hashMap.set('key11', 11);
+hashMap.set('key12', 12);
+hashMap.set('key13', 13);
+hashMap.set('key14', 14);
+hashMap.set('key15', 15);
+hashMap.set('key16', 16);
+hashMap.set('key17', 17);
+hashMap.set('key18', 18);
+hashMap.set('key19', 19);
+hashMap.set('key20', 20);
+hashMap.set('key21', 21);
+hashMap.set('key22', 22);
+hashMap.set('key23', 23);
+hashMap.set('key24', 24);
+hashMap.set('key25', 25);
+hashMap.set('key26', 26);
+hashMap.set('key27', 27);
+hashMap.set('key28', 28);
+hashMap.set('key29', 29);
+hashMap.set('key30', 30);
+hashMap.set('key31', 31);
+hashMap.set('key32', 32);
+hashMap.set('key33', 33);
+hashMap.set('key34', 34);
+hashMap.set('key35', 35);
+hashMap.set('key36', 36);
+hashMap.set('key37', 37);
+hashMap.set('key38', 38);
+hashMap.set('key39', 39);
+hashMap.set('key40', 40);
+hashMap.set('key40', 45);
+console.log(hashMap.MaxLength);
 
+console.log(hashMap.getLength());
 console.log(hashMap);
-console.log(hashMap.buckets[3]);
 
 //Extra credits: Create a class HashSet that behaves the same as a HashMap but only contains keys with no values.
 

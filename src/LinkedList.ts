@@ -153,21 +153,6 @@ export default class LinkedList {
     return null;
   }
   find(value: number) {
-    //returns the index of the node containing value,
-    //or null if not found.
-
-    /* assumptions:
-    using for loop to transverse and using 'i' in the for..loop .
-    to track  'current index' = 'current i'
-    so if (value === current.value) {
-      return true
-    } 
-
-
-    return false
-
-    */
-
     let current = this.head;
     const maxIndex = this.size - 1;
     for (let i = 0; i <= maxIndex; i++) {
@@ -179,11 +164,6 @@ export default class LinkedList {
     return null;
   }
   toString() {
-    /*represents your LinkedList objects as strings,
-     so you can print them out and preview them in the console. 
-    The format should be: ( value ) -> ( value ) -> ( value ) -> null
-     */
-    //using `` backtick to do so
     let totalStr = '';
     let current = this.head;
     while (current.next !== null) {
@@ -193,10 +173,6 @@ export default class LinkedList {
     totalStr += null;
     return totalStr;
   }
-  /*Extra Credit Tip: When you insert or remove a node,
-   consider how it will affect the existing nodes. 
-  Some of the nodes will need their nextNode link updated.
-  */
 
   insertAt(value: number | string, index: number) {
     if (index < 0 || index > size - 1) {
@@ -236,5 +212,11 @@ export default class LinkedList {
     current.next = copy;
 
     this.size--;
+  }
+}
+// I should extend class instead of modifying the old one but since I copy the project linkedList and move it into HashtableProject(it doesssn't matter)
+export class HashMapLinkedList extends LinkedList {
+  constructor(value, key) {
+    super(value, key);
   }
 }
